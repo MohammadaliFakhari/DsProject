@@ -34,8 +34,8 @@ namespace Project
         {
             File.Delete(@"../datasets/effects.txt");
             StreamWriter writerEffects = new StreamWriter(@"../datasets/effects.txt");
-            int counter = 0;
-            string form = "";
+            var counter = 0;
+            var form = "";
             foreach (DictionaryEntry item in effects)
             {
                 form = item.Key.ToString();
@@ -61,13 +61,13 @@ namespace Project
 
             writerEffects.Close();
         }
-        public static void SaveAlergies(Hashtable alergies)
+        public static void SaveAllergies(Hashtable allergies)
         {
             var form = "";
             var counter = 0;
             File.Delete(@"../datasets/alergies.txt");
             var writerAlergies = new StreamWriter(@"../datasets/alergies.txt");
-            foreach (DictionaryEntry item in alergies)
+            foreach (DictionaryEntry item in allergies)
             {
                 form = item.Key.ToString();
                 form += " :";
@@ -91,10 +91,7 @@ namespace Project
             }
 
             writerAlergies.Close();
-            // drugs
-            
         }
-
         public static List<string> ReadFromDisease()
         {
             var diseases = new List<string>();
@@ -102,7 +99,7 @@ namespace Project
 
             return diseases;
         }
-        public static Hashtable ReadFromAlergies()
+        public static Hashtable ReadFromAllergies()
         {
             var Line = "";
             var alergies = new Hashtable();
@@ -164,12 +161,15 @@ namespace Project
             {
                 counter++;
                 divider2 = Line.Split(' ', ':');
-                //drugs.Add(counter, $"{divider2[0]}{divider2[1]}");
                 drugs.Add(divider2[0], divider2[3]);
             }
             reader.Close();
 
             return drugs;
+        }
+        public static void UserInterface()
+        {
+
         }
         private static void Main()
         {
@@ -177,7 +177,7 @@ namespace Project
             time.Start();
             // read from memory
             var diseases = ReadFromDisease();
-            var alergies = ReadFromAlergies();
+            var allergies = ReadFromAllergies();
             var effects = ReadFromEffects();
             var drugs = ReadFromDrugs();
             // reading Ends
@@ -195,9 +195,8 @@ namespace Project
             SaveDrugs(drugs);
             SaveDiseases(diseases);
             SaveEffects(effects);
-            SaveAlergies(alergies);
+            SaveAllergies(allergies);
             
-
             time.Stop();
             Console.WriteLine(time.ElapsedMilliseconds);
         }
